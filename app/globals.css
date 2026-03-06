@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 225 40% 98%;
+  --foreground: 221 39% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 221 39% 11%;
+  --primary: 222 89% 60%;
+  --primary-foreground: 0 0% 100%;
+  --muted: 220 33% 96%;
+  --muted-foreground: 220 16% 38%;
+  --border: 220 26% 88%;
+}
+
+.dark {
+  --background: 223 38% 9%;
+  --foreground: 220 30% 95%;
+  --card: 222 31% 13%;
+  --card-foreground: 220 30% 95%;
+  --primary: 191 100% 54%;
+  --primary-foreground: 220 35% 10%;
+  --muted: 224 26% 17%;
+  --muted-foreground: 220 17% 70%;
+  --border: 223 21% 23%;
+}
+
+:root[data-accent-theme="clean-light"] {
+  --primary: 222 89% 60%;
+}
+
+:root[data-accent-theme="graphite-dark"] {
+  --primary: 210 8% 58%;
+}
+
+:root[data-accent-theme="sunset-glow"] {
+  --primary: 16 92% 58%;
+}
+
+:root[data-accent-theme="midnight-neon"] {
+  --primary: 191 100% 54%;
+}
+
+:root[data-accent-theme="glacier"] {
+  --primary: 189 71% 52%;
+}
+
+:root[data-accent-theme="obsidian-gold"] {
+  --primary: 45 90% 56%;
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-body antialiased;
+  background-image: radial-gradient(circle at 12% 10%, rgba(59, 130, 246, 0.14), transparent 38%),
+    radial-gradient(circle at 82% 0%, rgba(34, 197, 94, 0.09), transparent 34%);
+  min-height: 100vh;
+}
+
+.glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.38));
+  backdrop-filter: blur(14px);
+}
+
+.dark .glass {
+  background: linear-gradient(135deg, rgba(28, 36, 53, 0.65), rgba(20, 28, 44, 0.5));
+}

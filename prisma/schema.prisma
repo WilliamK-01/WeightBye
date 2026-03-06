@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id               Int               @id @default(autoincrement())
+  name             String
+  height_cm        Float
+  start_weight_kg  Float
+  goal_weight_kg   Float
+  sex              String?
+  date_of_birth    DateTime?
+  unit_pref        String            @default("KG")
+  theme            String            @default("SYSTEM")
+  accent_theme     String            @default("clean-light")
+  title            String            @default("Awakening")
+  pin_hash         String?
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  entries          WeightEntry[]
+  progress         UserProgress?
+  achievements     UserAchievement[]
+}
+
+model WeightEntry {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  date       DateTime
+  weight_kg  Float
+  waist_cm   Float?
+  note       String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       UserProfile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, date])
+}
+
+model Achievement {
+  id              Int               @id @default(autoincrement())
+  key             String            @unique
+  title           String
+  description     String
+  category        String
+  xp_reward       Int
+  icon            String
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  id             Int         @id @default(autoincrement())
+  user_id        Int
+  achievement_id Int
+  unlocked_at    DateTime    @default(now())
+  user           UserProfile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  achievement    Achievement @relation(fields: [achievement_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, achievement_id])
+}
+
+model UserProgress {
+  user_id            Int      @id
+  xp_total           Int      @default(0)
+  level              Int      @default(1)
+  last_daily_xp_date DateTime?
+  user               UserProfile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
